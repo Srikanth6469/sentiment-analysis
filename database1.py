@@ -38,12 +38,12 @@ def db_connect():
     import os
     try:
         _conn = MySQLdb.connect(
-            host=os.getenv("DB_HOST", "127.0.0.1"),
-            user=os.getenv("DB_USER", "root"),
-            passwd=os.getenv("DB_PASSWORD", "1234"),
-            db=os.getenv("DB_NAME", "toxic"),
-            port=int(os.getenv("DB_PORT", 3306))
-        )
+        host=os.getenv("DB_HOST"),
+        user=os.getenv("DB_USER"),
+        passwd=os.getenv("DB_PASSWORD"),
+        db=os.getenv("DB_NAME"),
+        port=int(os.getenv("DB_PORT", 3306))
+    )
         return _conn.cursor(), _conn
     except Exception as e:
         print("❌ Database connection failed:", e)
