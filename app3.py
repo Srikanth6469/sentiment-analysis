@@ -17,15 +17,14 @@ from flask import Flask, render_template, request, redirect, url_for
 import pandas as pd
 from nltk.sentiment import SentimentIntensityAnalyzer
 import MySQLdb
+import os
 def db_connect():
-
-
-
-    _conn = MySQLdb.connect(host="localhost", user="root",
-                            passwd="1234", db="toxic")
-    c = _conn.cursor()
-
-    # return c, _conn
+    _conn = MySQLdb.connect(
+        host=os.environ["DB_HOST"],
+        user=os.environ["DB_USER"],
+        passwd=os.environ["DB_PASSWORD"],
+        db=os.environ["DB_NAME"]
+    )
     return _conn.cursor(), _conn
 
 app = Flask(__name__)
@@ -279,4 +278,4 @@ def inslogin():
 
    
 if __name__ == "__main__":
-    app.run(debug=True, host='127.0.0.1', port=5000)
+    app.run(debug=True, host='0.0.0.0', port=10000)

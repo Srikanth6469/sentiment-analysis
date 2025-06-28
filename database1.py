@@ -1,12 +1,14 @@
 import sqlite3
 import hashlib
 import datetime
+import MySQLdb
 from flask import session
 from flask import Flask, request, send_file
 import io
 import plotly.graph_objs as go
 import pymysql
 import mysql.connector
+import os
 
 # def db_connect():
 #     _conn = pymysql.connect(host="localhost", user="root",
@@ -20,14 +22,28 @@ import mysql.connector
 import mysql.connector
 import mysql.connector
 
+# def db_connect():
+#     conn = mysql.connector.connect(
+#         host="localhost",
+#         database="toxic",
+#         user="root",
+#         password="1234",
+#     )
+#     return conn.cursor(), conn  # ✅ return both cursor and connection
+
+
+
+
+
 def db_connect():
-    conn = mysql.connector.connect(
-        host="localhost",
-        database="toxic",
-        user="root",
-        password="1234",
+    _conn = MySQLdb.connect(
+        host=os.getenv("DB_HOST", "localhost"),
+        user=os.getenv("DB_USER", "root"),
+        passwd=os.getenv("DB_PASSWORD", "1234"),
+        db=os.getenv("DB_NAME", "toxic")
     )
-    return conn.cursor(), conn  # ✅ return both cursor and connection
+    return _conn.cursor(), _conn
+
 
 # ✅ CALL the function here with ()
 cursor, conn = db_connect()

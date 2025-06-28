@@ -17,17 +17,21 @@ from pydub import AudioSegment
 from nltk.sentiment import SentimentIntensityAnalyzer
 import pymysql
 import mysql.connector
+import os
 
 # Initialize Flask App
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
 # Use the connection like this:
-conn = mysql.connector.connect(
-    host="localhost", user="root", password="1234", database="toxic"
-)
-cursor = conn.cursor() 
-
+def db_connect():
+    _conn = MySQLdb.connect(
+        host=os.environ["DB_HOST"],
+        user=os.environ["DB_USER"],
+        passwd=os.environ["DB_PASSWORD"],
+        db=os.environ["DB_NAME"]
+    )
+    return _conn.cursor(), _conn
 
 # Replace MySQLdb with pymysql for compatibility
 # pymysql.install_as_MySQLdb()
@@ -220,4 +224,4 @@ def convert(audio_path):
         return target_path 
 
 if __name__ == "__main__":
-    app.run(debug=True, host='127.0.0.1', port=5000)
+    app.run(debug=True, host='0.0.0.1', port=10000)

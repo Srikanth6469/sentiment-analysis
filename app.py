@@ -3,6 +3,7 @@ import smtplib
 import random
 import string
 from datetime import datetime
+import MySQLdb
 from flask import Flask, session, url_for, redirect, render_template, request, abort, flash, send_file
 from database1 import db_connect,inc_reg,ins_loginact
 import pandas as pd
@@ -18,7 +19,8 @@ import pandas as pd
 from nltk.sentiment import SentimentIntensityAnalyzer
 import pymysql
 import mysql.connector
-
+import os
+import plotly
 
 
 # #Use the connection like this:
@@ -38,14 +40,13 @@ import mysql.connector
 
 #     return conn.cursor(), conn
 def db_connect():
-    print("✅ Connecting to DB...")
-    conn = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="1234",
-        database="toxic"
+    _conn = MySQLdb.connect(
+        host=os.environ["DB_HOST"],
+        user=os.environ["DB_USER"],
+        passwd=os.environ["DB_PASSWORD"],
+        db=os.environ["DB_NAME"]
     )
-    return conn.cursor(), conn
+    return _conn.cursor(), _conn
 
 
 app = Flask(__name__)
@@ -186,7 +187,8 @@ def atact():
       col_names =  ['text']
       var = pd.DataFrame(columns = col_names)
       var.loc[len(var)] = [data]
-      fileName="input\inputdata.csv"
+    #   fileName="input\inputdata.csv"
+      fileName = r"input\inputdata.csv"
       var.to_csv(fileName,index=False)
       result=predict(data)
       pred = result 
@@ -242,7 +244,8 @@ def upload():
             col_names =  ['text']
             var = pd.DataFrame(columns = col_names)
             var.loc[len(var)] = [s]
-            fileName="input\inputdata.csv"
+            # fileName="input\inputdata.csv"
+            fileName = r"input\inputdata.csv"
             var.to_csv(fileName,index=False)
             result=predict(s)
             pred = result 
