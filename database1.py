@@ -40,6 +40,7 @@ import mysql.connector
 
 import os
 import MySQLdb
+load_dotenv()
 
 def db_connect():
     print("DB_HOST:", os.environ.get("DB_HOST"))
