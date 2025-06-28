@@ -1,0 +1,86 @@
+import sqlite3
+import hashlib
+import datetime
+from flask import session
+from flask import Flask, request, send_file
+import io
+import plotly.graph_objs as go
+import pymysql
+import mysql.connector
+
+# def db_connect():
+#     _conn = pymysql.connect(host="localhost", user="root",
+#                             passwd="123", db="toxic")
+#     c = _conn.cursor()
+
+#     return c, _conn
+
+
+
+import mysql.connector
+import mysql.connector
+
+def db_connect():
+    conn = mysql.connector.connect(
+        host="localhost",
+        database="toxic",
+        user="root",
+        password="1234",
+    )
+    return conn.cursor(), conn  # ✅ return both cursor and connection
+
+# ✅ CALL the function here with ()
+cursor, conn = db_connect()
+
+cursor.execute("SHOW TABLES;")
+print(cursor.fetchall())
+
+conn.close()
+
+
+# -------------------------------Registration-----------------------------------------------------------------
+
+
+    
+
+
+def inc_reg(username,password,email,mobile):
+    try:
+        c, conn = db_connect()
+        print(username,password,email,mobile)
+        id="0"
+        status = "pending"
+        j = c.execute("insert into user (id,username,password,email,mobile,status) values ('"+id +
+                      "','"+username+"','"+password+"','"+email+"','"+mobile+"','"+status+"')")
+        conn.commit()
+        conn.close()
+        print(j)
+        return j
+    except Exception as e:
+        print(e)
+        return(str(e))
+    
+
+
+
+
+
+
+# # -------------------------------Registration End-----------------------------------------------------------------
+# # -------------------------------Loginact Start-----------------------------------------------------------------
+
+
+def ins_loginact(username, password):
+    try:
+        c, conn = db_connect()
+        c.execute("SELECT * FROM user WHERE username=%s AND password=%s", (username, password))
+        user = c.fetchone()
+        conn.close()
+        print(user)  # Debugging
+        return user is not None
+    except Exception as e:
+        print(e)
+        return False
+
+if __name__ == "__main__":
+    print(db_connect())
