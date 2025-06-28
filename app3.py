@@ -17,7 +17,12 @@ from flask import Flask, render_template, request, redirect, url_for
 import pandas as pd
 from nltk.sentiment import SentimentIntensityAnalyzer
 import MySQLdb
+
 import os
+
+from dotenv import load_dotenv
+load_dotenv()
+
 def db_connect():
     _conn = MySQLdb.connect(
         host=os.environ["DB_HOST"],
@@ -25,6 +30,7 @@ def db_connect():
         passwd=os.environ["DB_PASSWORD"],
         db=os.environ["DB_NAME"]
     )
+
     return _conn.cursor(), _conn
 
 app = Flask(__name__)
@@ -276,9 +282,7 @@ def inslogin():
 # # -------------------------------Loginact End-----------------------------------------------------------------
 
 
-import os
-
+   
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 10000))  # Render dynamically sets this
     app.run(debug=False, host='0.0.0.0', port=port)
-

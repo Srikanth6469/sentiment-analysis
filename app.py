@@ -21,6 +21,9 @@ import pymysql
 import mysql.connector
 import os
 import plotly
+from dotenv import load_dotenv
+load_dotenv()
+
 
 
 # #Use the connection like this:

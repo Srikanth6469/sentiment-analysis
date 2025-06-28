@@ -18,6 +18,9 @@ from nltk.sentiment import SentimentIntensityAnalyzer
 import pymysql
 import mysql.connector
 import os
+from dotenv import load_dotenv
+load_dotenv()
+
 
 # Initialize Flask App
 app = Flask(__name__)
@@ -226,5 +229,5 @@ def convert(audio_path):
 import os
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 10000))  
+    port = int(os.environ.get("PORT", 10000))  # Render dynamically sets this
     app.run(debug=False, host='0.0.0.0', port=port)

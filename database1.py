@@ -7,6 +7,11 @@ import io
 import plotly.graph_objs as go
 import pymysql
 import mysql.connector
+from dotenv import load_dotenv
+load_dotenv()
+from dotenv import load_dotenv
+load_dotenv()
+
 
 # def db_connect():
 #     _conn = pymysql.connect(host="localhost", user="root",
@@ -33,17 +38,24 @@ import mysql.connector
 
 
 
+import os
+import MySQLdb
+
 def db_connect():
-    import MySQLdb
-    import os
+    print("DB_HOST:", os.environ.get("DB_HOST"))
+    print("DB_USER:", os.environ.get("DB_USER"))
+    print("DB_PASSWORD:", os.environ.get("DB_PASSWORD"))
+    print("DB_NAME:", os.environ.get("DB_NAME"))
+    print("DB_PORT:", os.environ.get("DB_PORT"))
+
     try:
         _conn = MySQLdb.connect(
-        host=os.getenv("DB_HOST"),
-        user=os.getenv("DB_USER"),
-        passwd=os.getenv("DB_PASSWORD"),
-        db=os.getenv("DB_NAME"),
-        port=int(os.getenv("DB_PORT", 3306))
-    )
+            host=os.environ.get("DB_HOST", "localhost"),
+            user=os.environ.get("DB_USER", "root"),
+            passwd=os.environ.get("DB_PASSWORD", "1234"),
+            db=os.environ.get("DB_NAME", "toxic"),
+            port=int(os.environ.get("DB_PORT", 3306))
+        )
         return _conn.cursor(), _conn
     except Exception as e:
         print("❌ Database connection failed:", e)
