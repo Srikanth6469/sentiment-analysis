@@ -43,12 +43,6 @@ import MySQLdb
 load_dotenv()
 
 def db_connect():
-    print("DB_HOST:", os.environ.get("DB_HOST"))
-    print("DB_USER:", os.environ.get("DB_USER"))
-    print("DB_PASSWORD:", os.environ.get("DB_PASSWORD"))
-    print("DB_NAME:", os.environ.get("DB_NAME"))
-    print("DB_PORT:", os.environ.get("DB_PORT"))
-
     try:
         _conn = MySQLdb.connect(
             host=os.environ.get("DB_HOST", "localhost"),
