@@ -45,11 +45,11 @@ load_dotenv()
 def db_connect():
     try:
         _conn = MySQLdb.connect(
-            host=os.environ.get("DB_HOST",),
-            user=os.environ.get("DB_USER", ),
-            passwd=os.environ.get("DB_PASSWORD",),
-            db=os.environ.get("DB_NAME",),
-            port=int(os.environ.get("DB_PORT",))
+            host=os.environ.get("DB_HOST", "localhost"),
+            user=os.environ.get("DB_USER", "root"),
+            passwd=os.environ.get("DB_PASSWORD", "1234"),
+            db=os.environ.get("DB_NAME", "toxic"),
+            port=int(os.environ.get("DB_PORT", 3306))
         )
         return _conn.cursor(), _conn
     except Exception as e:
